@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My finished tests</title>
+    <link th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
+          rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <a href="/">Back to main</a>
+        <h2>My finished tests</h2>
+        <p class="lead">Result for the tests</p>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <h3 th:if="${not #lists.isEmpty(finishedTest)}">
+            <h2>All my results</h2>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 50%" scope="col">Title of test</th>
+                    <th style="width: 20%" scope="col">Date of finish</th>
+                    <th style="width: 10%" scope="col">Result</th>
+                    <th style="width: 10%" scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="test: ${finishedTest}" class="table-success">
+                    <td th:text="${test.titleOfTest}"></td>
+                    <td th:text="${test.date}"></td>
+                    <td th:text="${test.result}"></td>
+                    <td>
+                        <a th:href="@{'/deleteResult/idResult=' + ${test.id}}">
+                            <span>Delete</span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </h3>
+    </div>
+</div>
+<div class="py-5 text-center">
+    <h3 th:if="${#lists.isEmpty(finishedTest)}">
+        <h2>You haven't any finished tests yet.</h2>
+    </h3>
+</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titleOfTest}"></title>
+    <link th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
+          rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link th:href="@{css/backgrounds.css}" rel="stylesheet" type="text/css">
+</head>
+<style>
+    .container, th {
+        color: white;
+    }
+
+    a, a:hover {
+        color: orange;
+    }
+
+    .form-check-input {
+        width: 25px;
+        height: 25px;
+        vertical-align: middle;
+    }
+</style>
+<body class="text-center testsBgImage">
+<div class="container">
+    <div class="py-5 text-center">
+        <a href="/">Back to main</a>
+        <h2 th:text="${titleOfTest}" class="titleOfTest"></h2>
+        <p class="lead">Test, which show how you can cooperation with other people</p>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Question</th>
+            <th>Very negative</th>
+            <th>Negative</th>
+            <th>Neutral</th>
+            <th>Positive</th>
+            <th>Very positive</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="test: ${contentOfTest}" class="table-success">
+            <td th:text="${test.id}"></td>
+            <td th:text="${test.question}"></td>
+            <td><input class="form-check-input" type="radio" th:name="${test.id}" th:value="${test.veryNegative}"></td>
+            <td><input class="form-check-input" type="radio" th:name="${test.id}" th:value="${test.negative}"></td>
+            <td><input class="form-check-input" type="radio" th:name="${test.id}" th:value="${test.neutral}"></td>
+            <td><input class="form-check-input" type="radio" th:name="${test.id}" th:value="${test.positive}"></td>
+            <td><input class="form-check-input" type="radio" th:name="${test.id}" th:value="${test.veryPositive}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{'/saveResult/title=' + ${titleOfTest} + '/result='}" class="link" id="idLink">Save result</a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/js/saveResultForTest.js}"></script>
+</body>
+</html>

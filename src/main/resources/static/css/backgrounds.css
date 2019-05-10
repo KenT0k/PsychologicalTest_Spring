@@ -1,0 +1,24 @@
+.container-login100 {
+    background-image: url('../images/login.png');
+}
+#registrationBgImage {
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url('../images/login.png');
+    background-attachment: fixed;
+    background-size: cover;
+}
+.defaultPageBgImage{
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url('../images/homePage.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}
+.testsBgImage{
+    background: linear-gradient(rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),
+    url('../images/tests.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+}

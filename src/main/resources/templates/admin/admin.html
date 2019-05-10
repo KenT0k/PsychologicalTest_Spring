@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new tests</title>
+    <link th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
+          rel="stylesheet"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <a href="/">Back to main</a>
+        <h2>Add new tests</h2>
+        <p class="lead">Input form for add new tests</p>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Add tests</h4>
+            <form method="post" action="/admin/addTest">
+                <div class="mb-3">
+                    <label for="idTitleOfTest">Title</label>
+                    <input type="text" class="form-control" name="titleOfTest" placeholder="Title of test"
+                           id="idTitleOfTest" maxlength="30"
+                           oninvalid="setCustomValidity('Input title of test')"
+                           oninput="setCustomValidity('')" required>
+                </div>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Add new test</button>
+            </form>
+        </div>
+    </div>
+    <div th:if="${not #lists.isEmpty(createdTests)}"><br/>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 order-md-1">
+                <h2>Lists of tests</h2>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th style="width: 5%" scope="col">ID</th>
+                        <th style="width: 40%" scope="col">Title of test</th>
+                        <th style="width: 15%" scope="col">Date of create test</th>
+                        <th class="text-center" style="width: 15%" scope="col">Delete test</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="test: ${createdTests}" class="table-success">
+                        <td th:text="${test.id}"></td>
+                        <td th:text="${test.titleOfTest}"></td>
+                        <td th:text="${test.date}"></td>
+                        <td align="center">
+                            <a th:href="@{'/admin/titleOfTest=' + ${test.titleOfTest}}">
+                                <span>Delete</span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="py-5 text-center">
+        <h3 th:if="${#lists.isEmpty(createdTests)}">
+            <h2>Here will be created tests</h2>
+        </h3>
+    </div>
+</div>
+</body>
+</html>
