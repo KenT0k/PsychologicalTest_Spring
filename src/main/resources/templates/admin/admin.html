@@ -7,6 +7,7 @@
           rel="stylesheet"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+    <link th:href="@{css/backToTop.css}" rel="stylesheet">
 </head>
 <body class="bg-light">
 <div class="container">
@@ -22,32 +23,114 @@
                 <div class="mb-3">
                     <label for="idTitleOfTest">Title</label>
                     <input type="text" class="form-control" name="titleOfTest" placeholder="Title of test"
-                           id="idTitleOfTest" maxlength="30"
-                           oninvalid="setCustomValidity('Input title of test')"
+                           id="idTitleOfTest" maxlength="30" pattern="[a-z0-9-]+"
+                           oninvalid="setCustomValidity('Input title of test, using lower case and digit char')"
                            oninput="setCustomValidity('')" required>
+                    <div th:text="${errorWithCreateTitle}"></div>
                 </div>
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Add new test</button>
             </form>
+            <div th:if="${not #lists.isEmpty(createdTests)}"><br/>
+                <h4 class="mb-3">Next, add content to tests</h4>
+                <form method="post" action="/admin/addContentToTest">
+                    <div class="row" style="width: 125%;">
+                        <div class="col-md-5 mb-3">
+                            <label for="idTest">Choose the test</label>
+                            <select size="3" name="titleOfTest" id="idTest"
+                                    class="custom-select d-block w-100 select"
+                                    oninvalid="setCustomValidity('Select the title of test')"
+                                    oninput="setCustomValidity('')" required>
+                                <option th:each="test: ${createdTests}"
+                                        th:value="${test.titleOfTest}"
+                                        th:text="${test.id} + '. ' + ${test.titleOfTest}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="idQuestionOfTest">Question of test</label>
+                            <input type="text" class="form-control" name="question" placeholder="Question of test"
+                                   id="idQuestionOfTest" maxlength="100"
+                                   th:value="${test.question}"
+                                   oninvalid="setCustomValidity('Input question of test')"
+                                   oninput="setCustomValidity('')" required>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="idVeryNegative">Number of very negative</label>
+                            <input type="text" class="form-control" name="veryNegative"
+                                   placeholder="Number of very negative"
+                                   id="idVeryNegative" maxlength="3"
+                                   th:value="${test.veryNegative}" pattern="^[0-9]{1,3}$"
+                                   oninvalid="setCustomValidity('Input number of very negative of test')"
+                                   oninput="setCustomValidity('')" required>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="idNegative">Number of negative</label>
+                            <input type="text" class="form-control" name="negative" placeholder="Number of negative"
+                                   id="idNegative" maxlength="3"
+                                   th:value="${test.negative}" pattern="^[0-9]{1,3}$"
+                                   oninvalid="setCustomValidity('Input number of negative of test')"
+                                   oninput="setCustomValidity('')" required>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="idNeutral">Number of neutral</label>
+                            <input type="text" class="form-control" name="neutral" placeholder="Number of neutral"
+                                   id="idNeutral" maxlength="3"
+                                   th:value="${test.neutral}" pattern="^[0-9]{1,3}$"
+                                   oninvalid="setCustomValidity('Input number of neutral of test')"
+                                   oninput="setCustomValidity('')" required>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="idPositive">Number of positive</label>
+                            <input type="text" class="form-control" name="positive" placeholder="Number of positive"
+                                   id="idPositive" maxlength="3"
+                                   th:value="${test.positive}" pattern="^[0-9]{1,3}$"
+                                   oninvalid="setCustomValidity('Input number of positive of test')"
+                                   oninput="setCustomValidity('')" required>
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="idVeryPositive">Number of very positive</label>
+                            <input type="text" class="form-control" name="veryPositive"
+                                   placeholder="Number of very positive"
+                                   id="idVeryPositive" maxlength="3"
+                                   th:value="${test.veryPositive}"
+                                   pattern="^[0-9]{1,3}$"
+                                   oninvalid="setCustomValidity('Input number of very positive of test')"
+                                   oninput="setCustomValidity('')" required>
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg" type="submit">Add content to test</button>
+                    <button class="btn btn-primary btn-lg" type="reset">Clear input</button>
+                </form>
+            </div>
         </div>
     </div>
     <div th:if="${not #lists.isEmpty(createdTests)}"><br/>
         <div class="row d-flex justify-content-center">
             <div class="col-md-8 order-md-1">
-                <h2>Lists of tests</h2>
+                <h4 class="mb-3">List of tests</h4>
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th style="width: 5%" scope="col">ID</th>
                         <th style="width: 40%" scope="col">Title of test</th>
-                        <th style="width: 15%" scope="col">Date of create test</th>
+                        <th style="width: 15%" scope="col">Date of create</th>
                         <th class="text-center" style="width: 15%" scope="col">Delete test</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="test: ${createdTests}" class="table-success">
                         <td th:text="${test.id}"></td>
-                        <td th:text="${test.titleOfTest}"></td>
+                        <td>
+                            <input type="text" class="titleOfTest inputInTitle form-control" th:name="titleOfTest"
+                                   placeholder="Title of test" maxlength="30" pattern="[a-z0-9-]+"
+                                   th:value="${test.titleOfTest}" required>
+                            <a th:href="@{'/admin/oldTitleOfTest=' + ${test.titleOfTest} + '/newTitleOfTest='}"
+                               class="linkForTitleOfTest">
+                                Accept rename
+                            </a>
+                            <div th:text="${errorWithChangeTitle}"></div>
+                        </td>
                         <td th:text="${test.date}"></td>
                         <td align="center">
                             <a th:href="@{'/admin/titleOfTest=' + ${test.titleOfTest}}">
@@ -66,5 +149,9 @@
         </h3>
     </div>
 </div>
+<a href="#" id="back-to-top" title="Back to top">&uarr;</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/js/renameTitleOfTest.js}"></script>
+<script th:src="@{/js/backToTop.js}"></script>
 </body>
 </html>

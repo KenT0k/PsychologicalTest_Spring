@@ -1,5 +1,6 @@
 package com.interlink.psychological_tests.admin;
 
+import com.interlink.psychological_tests.tests.dto.Test;
 import com.interlink.psychological_tests.tests.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,12 +28,30 @@ public class AdminController {
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String getAddTestsPage(ModelMap modelMap) {
         modelMap.put("createdTests", testService.getCreatedTests());
+        modelMap.put("test", new Test());
         return "admin/admin.html";
     }
 
     @RequestMapping(value = "/admin/addTest", method = RequestMethod.POST)
-    public String saveTest(@RequestParam String titleOfTest) {
-        testService.addTest(titleOfTest);
+    public String saveTest(@RequestParam String titleOfTest, ModelMap modelMap) {
+        if (testService.getTestByTitle(titleOfTest) != null) {
+            modelMap.put("errorWithCreateTitle", "This title for test already exist.");
+            return "admin/admin.html";
+        } else {
+            testService.addTest(titleOfTest);
+            return "redirect:/admin";
+        }
+    }
+
+    @RequestMapping(value = "/admin/addContentToTest", method = RequestMethod.POST)
+    public String saveContentInTest(Test test, @RequestParam String titleOfTest) {
+        testService.addContentToTests(test, titleOfTest);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/oldTitleOfTest={titleOfTest}/newTitleOfTest={newTitleOfTask}", method = RequestMethod.GET)
+    public String changeTitleInTask(@PathVariable String titleOfTest, @PathVariable String newTitleOfTask, ModelMap modelMap) {
+        testService.renameTitleOfTest(titleOfTest, newTitleOfTask);
         return "redirect:/admin";
     }
 

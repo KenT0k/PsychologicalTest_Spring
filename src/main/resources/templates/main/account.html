@@ -7,6 +7,7 @@
           rel="stylesheet"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+    <link th:href="@{css/backToTop.css}" rel="stylesheet">
 </head>
 <body class="bg-light">
 <div class="container">
@@ -48,5 +49,8 @@
         <h2>You haven't any finished tests yet.</h2>
     </h3>
 </div>
+<a href="#" id="back-to-top" title="Back to top">&uarr;</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/js/backToTop.js}"></script>
 </body>
 </html>

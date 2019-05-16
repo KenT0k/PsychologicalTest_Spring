@@ -68,9 +68,46 @@ public class TestRepository {
         namedParameterJdbcTemplate.update(sqlAddTestToAddedTests, parameterAddTask);
     }
 
+    public Test getTestByTitle(String titleOfTest) {
+        try {
+            String sql = "SELECT * FROM added_tests WHERE title = :title";
+            return namedParameterJdbcTemplate.queryForObject(sql, new MapSqlParameterSource("title", titleOfTest), createdTestsRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    public void addContentToTests(Test test, String titleOfTest) {
+        String addContentToTests = "INSERT INTO " + titleOfTest + "(question, very_negative, negative, neutral, positive, very_positive) " +
+                "VALUES(:question, :very_negative, :negative, :neutral, :positive, :very_positive)";
+        SqlParameterSource parameterAddContentToTests = new MapSqlParameterSource()
+                .addValue("question", test.getQuestion())
+                .addValue("very_negative", test.getVeryNegative())
+                .addValue("negative", test.getNegative())
+                .addValue("neutral", test.getNeutral())
+                .addValue("positive", test.getPositive())
+                .addValue("very_positive", test.getVeryPositive());
+        namedParameterJdbcTemplate.update(addContentToTests, parameterAddContentToTests);
+    }
+
+    public void renameTitleOfTest(String titleOfTest, String newTitleOfTest) {
+        String sqlRenameTitleOfTest = "ALTER TABLE " + titleOfTest + " RENAME TO " + newTitleOfTest + "";
+        namedParameterJdbcTemplate.update(sqlRenameTitleOfTest, new MapSqlParameterSource());
+        String sqlRenameTitleOfTestInAddedTests = "UPDATE added_tests SET title = :" + titleOfTest +
+                " WHERE title = :title";
+        SqlParameterSource parameterRenameTitleOfTestInAddedTests = new MapSqlParameterSource()
+                .addValue(titleOfTest, newTitleOfTest)
+                .addValue("title", titleOfTest);
+        namedParameterJdbcTemplate.update(sqlRenameTitleOfTestInAddedTests, parameterRenameTitleOfTestInAddedTests);
+    }
+
     public List<Test> getCreatedTests() {
         String sql = "SELECT * FROM added_tests";
-        return namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource(), createdTestsRowMapper);
+        List<Test> tests = namedParameterJdbcTemplate.query(sql, new MapSqlParameterSource(), createdTestsRowMapper);
+        tests = tests.stream()
+                .sorted(Comparator.comparing(Test::getId))
+                .collect(Collectors.toList());
+        return tests;
     }
 
     public void removeTest(String titleOfTable) {

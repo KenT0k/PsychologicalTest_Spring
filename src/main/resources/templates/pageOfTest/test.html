@@ -8,6 +8,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
     <link th:href="@{css/backgrounds.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{css/backToTop.css}" rel="stylesheet">
 </head>
 <style>
     .container, th {
@@ -57,7 +58,9 @@
     </table>
     <a th:href="@{'/saveResult/title=' + ${titleOfTest} + '/result='}" class="link" id="idLink">Save result</a>
 </div>
+<a href="#" id="back-to-top" title="Back to top">&uarr;</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script th:src="@{/js/saveResultForTest.js}"></script>
+<script th:src="@{/js/backToTop.js}"></script>
 </body>
 </html>

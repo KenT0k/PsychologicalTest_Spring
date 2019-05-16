@@ -25,6 +25,18 @@ public class TestService {
         testRepository.addTest(titleOfTest);
     }
 
+    public Test getTestByTitle(String titleOfTest) {
+        return testRepository.getTestByTitle(titleOfTest);
+    }
+
+    public void addContentToTests(Test test, String titleOfTest) {
+        testRepository.addContentToTests(test, titleOfTest);
+    }
+
+    public void renameTitleOfTest(String titleOfTest, String newTitleOfTest) {
+        testRepository.renameTitleOfTest(titleOfTest, newTitleOfTest);
+    }
+
     public List<Test> getCreatedTests() {
         return testRepository.getCreatedTests();
     }

@@ -7,6 +7,7 @@
           rel="stylesheet"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+    <link th:href="@{css/backToTop.css}" rel="stylesheet">
 </head>
 <body class="bg-light">
 <div class="container">
@@ -22,27 +23,19 @@
                 <thead>
                 <tr>
                     <th style="width: 10%" scope="col">ID</th>
-                    <th style="width: 15%" scope="col">First name</th>
-                    <th style="width: 15%" scope="col">Last name</th>
+                    <th style="width: 15%" scope="col">Student</th>
                     <th style="width: 10%" scope="col">Group</th>
                     <th style="width: 30%" scope="col">Title of test</th>
                     <th style="width: 10%" scope="col">Result</th>
-                    <!--<th style="width: 10%" scope="col">Delete</th>-->
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="userWithTest: ${allFinishedTest}" class="table-success">
                     <td th:text="${userWithTest.id}"></td>
-                    <td th:text="${userWithTest.firstName}"></td>
-                    <td th:text="${userWithTest.lastName}"></td>
+                    <td th:text="${userWithTest.firstName} + ' ' + ${userWithTest.lastName}"></td>
                     <td th:text="${userWithTest.group}"></td>
                     <td th:text="${userWithTest.titleOfTest}"></td>
                     <td th:text="${userWithTest.result}"></td>
-                    <!--<td>-->
-                        <!--<a th:href="@{'/deleteResult/idResult=' + ${test.id}}">-->
-                            <!--<span>Delete</span>-->
-                        <!--</a>-->
-                    <!--</td>-->
                 </tr>
                 </tbody>
             </table>
@@ -54,5 +47,8 @@
         <h2>Hasn't any finished tests yet.</h2>
     </h3>
 </div>
+<a href="#" id="back-to-top" title="Back to top">&uarr;</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script th:src="@{/js/backToTop.js}"></script>
 </body>
 </html>

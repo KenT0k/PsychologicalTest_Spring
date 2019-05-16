@@ -38,10 +38,9 @@ public class EditUserController {
     }
 
     @PostMapping
-    public String changeDataToUser(UserRegistrationForm userRegistrationForm, Model model) {
+    public String changeDataToUser(UserRegistrationForm userRegistrationForm) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         userService.updateUser(userRegistrationService.insertDataToUser(userRegistrationForm), user.getUsername());
-        model.addAttribute("user", new UserRegistrationForm());
         return "redirect:/";
     }
 }
